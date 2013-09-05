@@ -26,7 +26,24 @@ you need to make a module executable:
 chmod 001 scr_capture.py
 ```
 
-TODO:
------
+TODO
+----
 - [ ] Make working under wayland;
 - [ ] Capture sound;
+
+See also
+--------
+If you like pure bash, you can use this script. 
+```bash
+#!/bin/sh
+ 
+if [ $1 ]
+then
+sleep $1
+fi
+ 
+name=`date +%Y-%m-%d-%H-%M`
+fullscreen=$(xwininfo -root | grep 'geometry' | awk '{print $2}' | awk '{ print $1 } BEGIN { FS="+" }')
+ 
+ffmpeg -f alsa -async 1 -ac 2 -i hw:0,0 -f x11grab -r 30 -s $fullscreen -i :0.0 -acodec pcm_s16le -vcodec libx264 -preset ultrafast -threads 2 -y $name.mkv
+```
