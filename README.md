@@ -33,7 +33,7 @@ TODO
 
 See also
 --------
-If you like pure bash, you can use this script. 
+If you like pure bash, you can use this script. It captures sound too. Don't forgot to set up your pulse to record sound from microphone or software via pavucontrol.
 ```bash
 #!/bin/sh
  
@@ -45,5 +45,5 @@ fi
 name=`date +%Y-%m-%d-%H-%M`
 fullscreen=$(xwininfo -root | grep 'geometry' | awk '{print $2}' | awk '{ print $1 } BEGIN { FS="+" }')
  
-ffmpeg -f alsa -async 1 -ac 2 -i hw:0,0 -f x11grab -r 30 -s $fullscreen -i :0.0 -acodec pcm_s16le -vcodec libx264 -preset ultrafast -threads 2 -y $name.mkv
+ffmpeg -f alsa -ac 2 -i pulse -f x11grab -r 30 -s $fullscreen -i :0.0 -acodec pcm_s16le -vcodec libx264 -preset ultrafast -threads 2 -y $name.mkv
 ```
