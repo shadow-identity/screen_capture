@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 # U can simply change fps
-fps = 30
+fps = 25
 
 # get resolution
 res = subprocess.check_output("xrandr | grep \*", shell=True).split()[0]
